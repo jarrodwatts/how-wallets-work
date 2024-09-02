@@ -17,11 +17,16 @@ import {
 import { HDKey } from "ethereum-cryptography/hdkey";
 import { Button } from "./ui/button";
 
-export default function GenerateKeypair() {
+export default function GenerateKeypair({
+  privateKey,
+  setPrivateKey,
+}: {
+  privateKey: HDKey | null;
+  setPrivateKey: (privateKey: HDKey) => void;
+}) {
   const [bitsForEntropy, setBitsForEntropy] = useState<Uint8Array | null>(null);
   const [mnemonic, setMnemonic] = useState<string | null>(null);
   const [seed, setSeed] = useState<Uint8Array | null>(null);
-  const [masterKey, setMasterKey] = useState<HDKey | null>(null);
   const [ethereumAddress, setEthereumAddress] = useState<string | null>(null);
 
   function generateKeypair() {
@@ -35,7 +40,7 @@ export default function GenerateKeypair() {
     setSeed(seed);
 
     const masterKey = getMasterPrivateKeyFromSeed(seed);
-    setMasterKey(masterKey);
+    setPrivateKey(masterKey);
 
     const ethereumAddress = getAddressFromPublicKey(masterKey);
     setEthereumAddress(ethereumAddress);
@@ -51,12 +56,12 @@ export default function GenerateKeypair() {
         elliptic curve.
       </p>
 
-      <Table className="mt-6 text-left min-w-[720px] max-w-[720px]">
+      <Table className="mt-6 text-left lg:min-w-[720px] max-w-[720px] m-4">
         <TableHeader>
           <TableRow>
-            <TableHead>#</TableHead>
-            <TableHead>Step</TableHead>
-            <TableHead className="w-[320px]">Value</TableHead>
+            <TableHead className="w-[16px]">#</TableHead>
+            <TableHead className="w-2/5">Step</TableHead>
+            <TableHead>Value</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -85,7 +90,7 @@ export default function GenerateKeypair() {
             <TableCell>
               Convert mnemonic seed phrase into a binary seed
             </TableCell>
-            <TableCell className="text-clip	max-w-[320px]">
+            <TableCell className="text-clip	max-w-[100px] break-words">
               {seed ? toHex(seed) : ""}
             </TableCell>
           </TableRow>
@@ -95,8 +100,8 @@ export default function GenerateKeypair() {
               <strong>4</strong>
             </TableCell>
             <TableCell>Derive a private key from the seed phrase</TableCell>
-            <TableCell className="text-clip	max-w-[320px]">
-              {masterKey ? toHex(masterKey.privateKey!) : ""}
+            <TableCell className="text-clip	max-w-[100px] break-words">
+              {privateKey ? toHex(privateKey.privateKey!) : ""}
             </TableCell>
           </TableRow>
 
@@ -108,7 +113,7 @@ export default function GenerateKeypair() {
               Derive the public key using ECC and format it to an Ethereum
               address
             </TableCell>
-            <TableCell className="text-clip	max-w-[320px]">
+            <TableCell className="text-clip	max-w-[100px] break-words">
               {ethereumAddress}
             </TableCell>
           </TableRow>
