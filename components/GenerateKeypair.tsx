@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   getAddressFromPublicKey,
   getMasterPrivateKeyFromSeed,
@@ -8,7 +8,6 @@ import { generateRandom16Bits } from "@/lib/csprng";
 import { toHex } from "ethereum-cryptography/utils";
 import {
   Table,
-  TableCaption,
   TableHeader,
   TableRow,
   TableHead,
@@ -25,6 +24,23 @@ export default function GenerateKeypair() {
   const [masterKey, setMasterKey] = useState<HDKey | null>(null);
   const [ethereumAddress, setEthereumAddress] = useState<string | null>(null);
 
+  function generateKeypair() {
+    const bitsForEntropy = generateRandom16Bits();
+    setBitsForEntropy(bitsForEntropy);
+
+    const mnemonic = generateMnemonic(bitsForEntropy);
+    setMnemonic(mnemonic);
+
+    const seed = getSeedFromMnemonic(mnemonic);
+    setSeed(seed);
+
+    const masterKey = getMasterPrivateKeyFromSeed(seed);
+    setMasterKey(masterKey);
+
+    const ethereumAddress = getAddressFromPublicKey(masterKey);
+    setEthereumAddress(ethereumAddress);
+  }
+
   return (
     <div className="my-4">
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
@@ -40,50 +56,34 @@ export default function GenerateKeypair() {
           <TableRow>
             <TableHead>#</TableHead>
             <TableHead>Step</TableHead>
-            <TableHead>Generate</TableHead>
             <TableHead className="w-[320px]">Value</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell>1</TableCell>
-            <TableCell>Generate 128 random bits using CSPRNG</TableCell>
             <TableCell>
-              <Button onClick={() => setBitsForEntropy(generateRandom16Bits())}>
-                Generate
-              </Button>
+              <strong>1</strong>
             </TableCell>
+            <TableCell>Generate 128 random bits using CSPRNG</TableCell>
             <TableCell>{bitsForEntropy ? toHex(bitsForEntropy) : ""}</TableCell>
           </TableRow>
 
           <TableRow>
-            <TableCell>2</TableCell>
             <TableCell>
-              Generate a mnemonic seed phrase using the entropy (128 bits)
+              <strong>2</strong>
             </TableCell>
             <TableCell>
-              <Button
-                disabled={!bitsForEntropy}
-                onClick={() => setMnemonic(generateMnemonic(bitsForEntropy!))}
-              >
-                Generate
-              </Button>
+              Generate a mnemonic seed phrase using the entropy (128 bits)
             </TableCell>
             <TableCell>{mnemonic}</TableCell>
           </TableRow>
 
           <TableRow>
-            <TableCell>3</TableCell>
             <TableCell>
-              Convert mnemonic seed phrase into a binary seed
+              <strong>3</strong>
             </TableCell>
             <TableCell>
-              <Button
-                disabled={!mnemonic}
-                onClick={() => setSeed(getSeedFromMnemonic(mnemonic!))}
-              >
-                Generate
-              </Button>
+              Convert mnemonic seed phrase into a binary seed
             </TableCell>
             <TableCell className="text-clip	max-w-[320px]">
               {seed ? toHex(seed) : ""}
@@ -91,36 +91,22 @@ export default function GenerateKeypair() {
           </TableRow>
 
           <TableRow>
-            <TableCell>4</TableCell>
-            <TableCell>Derive a private key from the seed phrase</TableCell>
             <TableCell>
-              <Button
-                disabled={!seed}
-                onClick={() => setMasterKey(getMasterPrivateKeyFromSeed(seed!))}
-              >
-                Generate
-              </Button>
+              <strong>4</strong>
             </TableCell>
+            <TableCell>Derive a private key from the seed phrase</TableCell>
             <TableCell className="text-clip	max-w-[320px]">
               {masterKey ? toHex(masterKey.privateKey!) : ""}
             </TableCell>
           </TableRow>
 
           <TableRow>
-            <TableCell>5</TableCell>
+            <TableCell>
+              <strong>5</strong>
+            </TableCell>
             <TableCell>
               Derive the public key using ECC and format it to an Ethereum
               address
-            </TableCell>
-            <TableCell>
-              <Button
-                disabled={!masterKey}
-                onClick={() =>
-                  setEthereumAddress(getAddressFromPublicKey(masterKey!))
-                }
-              >
-                Generate
-              </Button>
             </TableCell>
             <TableCell className="text-clip	max-w-[320px]">
               {ethereumAddress}
@@ -128,6 +114,10 @@ export default function GenerateKeypair() {
           </TableRow>
         </TableBody>
       </Table>
+
+      <Button onClick={generateKeypair} className="w-full mt-1">
+        Generate Keypair
+      </Button>
     </div>
   );
 }

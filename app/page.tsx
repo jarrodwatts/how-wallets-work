@@ -14,7 +14,7 @@ export default function Home() {
             radial-gradient(circle farthest-side at 100% 30%, rgba(50, 205, 50, 0.25), rgba(0, 0, 0, 0) 30%)
           `,
         }}
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-[-100]"
       />
 
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
