@@ -27,11 +27,11 @@ export default function Home() {
       />
 
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-        How Ethereum Accounts Work
+        How Wallets Work
       </h1>
       <p className="leading-7 mt-2">
-        Visual demonstration of how Ethereum accounts are generated and used to
-        sign transactions.
+        Visual demonstration of how accounts are generated and used to sign
+        transactions.
       </p>
 
       <Separator className="my-2" />
