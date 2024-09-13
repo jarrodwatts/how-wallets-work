@@ -30,7 +30,7 @@ export default function SignMessage({
   return (
     <div className="my-4 mx-4">
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-        2: Sign messages with a private key
+        Sign a message with a private key
       </h2>
       <p className="leading-7 mt-2">
         Using your generated private key, you can sign message hashes.
@@ -49,7 +49,11 @@ export default function SignMessage({
         {hash}
       </p>
 
-      <Button onClick={signMessage} className="w-full mt-1">
+      <Button
+        onClick={signMessage}
+        className="w-full mt-1"
+        disabled={!privateKey?.privateKey || !message}
+      >
         Sign Message Hash
       </Button>
 

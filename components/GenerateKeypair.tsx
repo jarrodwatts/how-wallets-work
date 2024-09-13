@@ -49,7 +49,7 @@ export default function GenerateKeypair({
   return (
     <div className="my-4">
       <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-        1: Generate a public/private keypair
+        Generate a public/private keypair
       </h2>
       <p className="leading-7 mt-2">
         Create a private/public key pair on the <strong>secp256k1</strong>{" "}

@@ -2,9 +2,11 @@
 
 import GenerateKeypair from "@/components/GenerateKeypair";
 import SignMessage from "@/components/SignMessage";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { HDKey } from "ethereum-cryptography/hdkey";
 import { useState } from "react";
+import ShardPrivateKey from "@/components/ShardPrivateKey";
 
 export default function Home() {
   const [privateKey, setPrivateKey] = useState<HDKey | null>(null);
@@ -15,7 +17,6 @@ export default function Home() {
         style={{
           // Pretty gradients in the background.
           backgroundImage: `
-            
             radial-gradient(circle farthest-side at -15% 85%, rgba(34, 139, 34, 0.36), rgba(0, 0, 0, 0) 52%),
             radial-gradient(circle farthest-side at 100% 30%, rgba(50, 205, 50, 0.25), rgba(0, 0, 0, 0) 30%)
           `,
@@ -33,10 +34,26 @@ export default function Home() {
 
       <Separator className="my-2" />
 
-      <GenerateKeypair privateKey={privateKey} setPrivateKey={setPrivateKey} />
-      <Separator className="my-2" />
-      <SignMessage privateKey={privateKey} />
-      <Separator className="my-2" />
+      <Tabs defaultValue="generate-keypair">
+        <TabsList className="mb-8">
+          <TabsTrigger value="generate-keypair">Generate Keypair</TabsTrigger>
+          <TabsTrigger value="shard-private-key">Shard Private Key</TabsTrigger>
+          <TabsTrigger value="sign-message">Sign Message</TabsTrigger>
+        </TabsList>
+        <TabsContent value="generate-keypair">
+          <GenerateKeypair
+            privateKey={privateKey}
+            setPrivateKey={setPrivateKey}
+          />
+        </TabsContent>
+        <TabsContent value="shard-private-key">
+          <ShardPrivateKey privateKey={privateKey} />
+        </TabsContent>
+
+        <TabsContent value="sign-message">
+          <SignMessage privateKey={privateKey} />
+        </TabsContent>
+      </Tabs>
     </main>
   );
 }
