@@ -1,3 +1,14 @@
+/**
+ * This file contains all the constants used in the application
+ * - `RPC_URL` - RPC URL of Abstract testnet
+ * - PAYMASTER_ADDRESS: The address of a simple paymaster smart contract that sponsors gas fees for any transaction.
+ * - ACCOUNT_ABI: ABI of a smart contract account on Abstract.
+ * - ACCOUNT_BYTECODE: Bytecode of a smart contract account on Abstract.
+ * - NFT_CONTRACT_ABI: ABI of a simple NFT smart contract on Abstract.
+ * - NFT_CONTRACT_BYTECODE: Bytecode of a simple NFT smart contract on Abstract.
+ * - NFT_CONTRACT_ADDRESS: Address of a simple NFT smart contract on Abstract.
+ */
+
 export const RPC_URL = "https://api.testnet.abs.xyz";
 
 export const PAYMASTER_ADDRESS = "0x6068176Fa65Cc1482417418e408De938eA527637";
