@@ -28,40 +28,44 @@ export default function SignMessage({
   }
 
   return (
-    <div className="my-4 mx-4">
-      <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+    <div className="w-full max-w-3xl mx-auto px-4 py-6">
+      <h2 className="scroll-m-20 border-b pb-2 text-2xl sm:text-3xl font-semibold tracking-tight first:mt-0 mb-4">
         Sign a message with a private key
       </h2>
-      <p className="leading-7 mt-2">
+      <p className="text-sm sm:text-base text-muted-foreground mb-6">
         Using your generated private key, you can sign message hashes.
       </p>
 
       <Textarea
-        className="mt-6 max-w-[720px]"
+        className="w-full mb-4"
         placeholder="Enter a message to sign"
         rows={4}
         onChange={(e) => setMessage(e.target.value)}
         value={message}
       />
 
-      <p className="text-sm text-muted-foreground mt-2 break-words max-w-[750px]">
-        <strong>Message hash: </strong>
-        {hash}
-      </p>
+      <div className="space-y-2 mb-4">
+        <p className="text-sm font-semibold">Message hash:</p>
+        <p className="text-xs sm:text-sm text-muted-foreground break-all p-2 rounded-md">
+          {hash}
+        </p>
+      </div>
 
       <Button
         onClick={signMessage}
-        className="w-full mt-1"
+        className="w-full mb-4"
         disabled={!privateKey?.privateKey || !message}
       >
         Sign Message Hash
       </Button>
 
       {signature && (
-        <p className="text-sm text-muted-foreground mt-2 break-words max-w-[750px]">
-          <strong>Signature: </strong>
-          {signature}
-        </p>
+        <div className="space-y-2">
+          <p className="text-sm font-semibold">Signature:</p>
+          <p className="text-xs sm:text-sm text-muted-foreground break-all p-2 rounded-md">
+            {signature}
+          </p>
+        </div>
       )}
     </div>
   );
