@@ -7,6 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import { HDKey } from "ethereum-cryptography/hdkey";
 import { useState } from "react";
 import ShardPrivateKey from "@/components/ShardPrivateKey";
+import DeploySmartWallet from "@/components/DeploySmartWallet";
+import { toHex } from "viem";
 
 export default function Home() {
   const [privateKey, setPrivateKey] = useState<HDKey | null>(null);
@@ -39,6 +41,9 @@ export default function Home() {
           <TabsTrigger value="generate-keypair">Generate Keypair</TabsTrigger>
           <TabsTrigger value="shard-private-key">Shard Private Key</TabsTrigger>
           <TabsTrigger value="sign-message">Sign Message</TabsTrigger>
+          <TabsTrigger value="deploy-smart-wallet">
+            Deploy Smart Wallet
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="generate-keypair">
           <GenerateKeypair
@@ -52,6 +57,12 @@ export default function Home() {
 
         <TabsContent value="sign-message">
           <SignMessage privateKey={privateKey} />
+        </TabsContent>
+
+        <TabsContent value="deploy-smart-wallet">
+          <DeploySmartWallet
+            privateKeyHex={privateKey ? toHex(privateKey.privateKey) : null}
+          />
         </TabsContent>
       </Tabs>
     </main>

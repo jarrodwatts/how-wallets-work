@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "How Crypto Wallets Work",
-  description: "Showcase of Etheruem's cryptoraphy and how wallets work",
+  description: "Showcase of wallet cryptoraphy and how wallets work",
 };
 
 export default function RootLayout({
