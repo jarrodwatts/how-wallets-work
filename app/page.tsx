@@ -61,6 +61,7 @@ export default function Home() {
 
         <TabsContent value="deploy-smart-wallet">
           <DeploySmartWallet
+            // @ts-ignore
             privateKeyHex={privateKey ? toHex(privateKey.privateKey) : null}
           />
         </TabsContent>
